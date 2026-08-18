@@ -1,0 +1,619 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SaveGrab - Social Media Downloader</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="stylesheet" href="/css/style.css">
+    <style>
+        /* ==================== CREATOR SECTION ==================== */
+        .creator-section {
+            max-width: 600px;
+            margin: 0 auto 60px;
+            padding: 0 24px;
+        }
+
+        .creator-card {
+            background: linear-gradient(135deg, rgba(102, 126, 234, 0.08), rgba(118, 75, 162, 0.08));
+            border: 1px solid rgba(102, 126, 234, 0.2);
+            border-radius: 20px;
+            padding: 32px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .creator-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, #667eea, #764ba2, #f093fb, #667eea);
+            background-size: 300% 100%;
+            animation: gradientMove 4s ease-in-out infinite;
+        }
+
+        @keyframes gradientMove {
+            0%, 100% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+        }
+
+        .creator-card:hover {
+            border-color: rgba(102, 126, 234, 0.4);
+            box-shadow: 0 8px 40px rgba(102, 126, 234, 0.15);
+            transform: translateY(-2px);
+        }
+
+        .creator-avatar {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 16px;
+            font-size: 2rem;
+            color: white;
+            box-shadow: 0 4px 20px rgba(102, 126, 234, 0.3);
+            position: relative;
+        }
+
+        .creator-avatar::after {
+            content: '✓';
+            position: absolute;
+            bottom: 2px;
+            right: 2px;
+            width: 22px;
+            height: 22px;
+            background: #00c853;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.65rem;
+            color: white;
+            border: 2px solid var(--bg-primary);
+            font-weight: bold;
+        }
+
+        .creator-label {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 4px 14px;
+            background: rgba(102, 126, 234, 0.1);
+            border: 1px solid rgba(102, 126, 234, 0.2);
+            border-radius: 100px;
+            font-size: 0.7rem;
+            font-weight: 600;
+            color: #667eea;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            margin-bottom: 12px;
+        }
+
+        .creator-name {
+            font-size: 1.5rem;
+            font-weight: 800;
+            margin-bottom: 6px;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .creator-role {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+            margin-bottom: 20px;
+        }
+
+        .creator-bio {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            line-height: 1.6;
+            margin-bottom: 24px;
+            max-width: 400px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .creator-socials {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .creator-social-link {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            padding: 8px 16px;
+            background: rgba(255, 255, 255, 0.04);
+            border: 1px solid var(--border-color);
+            border-radius: 100px;
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-size: 0.8rem;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+
+        .creator-social-link:hover {
+            color: var(--text-primary);
+            background: rgba(255, 255, 255, 0.08);
+            border-color: rgba(255, 255, 255, 0.15);
+            transform: translateY(-1px);
+        }
+
+        .creator-social-link.github:hover {
+            border-color: rgba(255, 255, 255, 0.3);
+            color: #fff;
+        }
+
+        .creator-social-link.facebook-link:hover {
+            border-color: rgba(24, 119, 242, 0.4);
+            color: #1877f2;
+        }
+
+        .creator-social-link.telegram:hover {
+            border-color: rgba(0, 136, 204, 0.4);
+            color: #0088cc;
+        }
+
+        .creator-social-link.instagram-link:hover {
+            border-color: rgba(225, 48, 108, 0.4);
+            color: #e1306c;
+        }
+
+        /* ==================== STATS BAR ==================== */
+        .stats-bar {
+            display: flex;
+            justify-content: center;
+            gap: 32px;
+            flex-wrap: wrap;
+            margin-bottom: 20px;
+        }
+
+        .stat-item {
+            text-align: center;
+        }
+
+        .stat-number {
+            font-size: 1.3rem;
+            font-weight: 800;
+            color: var(--text-primary);
+            display: block;
+        }
+
+        .stat-label {
+            font-size: 0.7rem;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        /* ==================== SECTION DIVIDER ==================== */
+        .section-divider {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 16px;
+            margin: 40px auto;
+            max-width: 400px;
+            padding: 0 24px;
+        }
+
+        .section-divider .line {
+            flex: 1;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, var(--border-color), transparent);
+        }
+
+        .section-divider .divider-icon {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.8rem;
+            color: var(--text-muted);
+        }
+
+        /* ==================== FEATURES SECTION ==================== */
+        .features-section {
+            max-width: 900px;
+            margin: 0 auto 60px;
+            padding: 0 24px;
+        }
+
+        .features-title {
+            text-align: center;
+            font-size: 1.4rem;
+            font-weight: 700;
+            margin-bottom: 8px;
+            color: var(--text-primary);
+        }
+
+        .features-subtitle {
+            text-align: center;
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            margin-bottom: 32px;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 16px;
+        }
+
+        .feature-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-md);
+            padding: 20px;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+
+        .feature-card:hover {
+            border-color: rgba(255, 255, 255, 0.1);
+            transform: translateY(-2px);
+        }
+
+        .feature-card-icon {
+            width: 44px;
+            height: 44px;
+            border-radius: 12px;
+            background: rgba(102, 126, 234, 0.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 12px;
+            font-size: 1.1rem;
+            color: #667eea;
+        }
+
+        .feature-card h4 {
+            font-size: 0.9rem;
+            font-weight: 600;
+            margin-bottom: 6px;
+        }
+
+        .feature-card p {
+            font-size: 0.78rem;
+            color: var(--text-muted);
+            line-height: 1.5;
+        }
+
+        /* ==================== FOOTER CREDIT ==================== */
+        .footer-inner {
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .footer-credit {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+            margin-bottom: 8px;
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+        }
+
+        .footer-credit .heart {
+            color: #ff1744;
+            animation: heartBeat 1.5s ease-in-out infinite;
+        }
+
+        @keyframes heartBeat {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.2); }
+        }
+
+        .footer-credit a {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            font-weight: 700;
+            text-decoration: none;
+        }
+
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin-top: 12px;
+        }
+
+        .footer-links a {
+            color: var(--text-muted);
+            text-decoration: none;
+            font-size: 0.78rem;
+            transition: color 0.3s ease;
+        }
+
+        .footer-links a:hover {
+            color: var(--text-primary);
+        }
+
+        /* ==================== RESPONSIVE ==================== */
+        @media (max-width: 768px) {
+            .creator-card {
+                padding: 24px 20px;
+            }
+
+            .stats-bar {
+                gap: 20px;
+            }
+
+            .creator-socials {
+                gap: 8px;
+            }
+
+            .creator-social-link {
+                padding: 6px 12px;
+                font-size: 0.75rem;
+            }
+
+            .features-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 480px) {
+            .features-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Background Animation -->
+    <div class="bg-animation">
+        <div class="orb"></div>
+        <div class="orb"></div>
+        <div class="orb"></div>
+    </div>
+
+    <!-- Navbar -->
+    <nav class="navbar">
+        <a href="/" class="nav-brand">
+            <div class="logo-icon"><i class="fas fa-download"></i></div>
+            SaveGrab
+        </a>
+        <button class="nav-toggle" onclick="toggleNav()">
+            <span></span><span></span><span></span>
+        </button>
+        <ul class="nav-links" id="navLinks">
+            <li><a href="/" class="active"><i class="fas fa-home"></i> Home</a></li>
+            <li><a href="/youtube"><i class="fab fa-youtube"></i> YouTube</a></li>
+            <li><a href="/facebook"><i class="fab fa-facebook"></i> Facebook</a></li>
+            <li><a href="/instagram"><i class="fab fa-instagram"></i> Instagram</a></li>
+            <li><a href="/tiktok"><i class="fab fa-tiktok"></i> TikTok</a></li>
+        </ul>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <!-- Hero -->
+        <section class="hero">
+            <div class="hero-badge">
+                <span class="dot"></span>
+                Free & Unlimited Downloads
+            </div>
+            <h1>Download Videos from Any Social Media</h1>
+            <p>Fast, free, and secure video downloader. Save videos from YouTube, Facebook, Instagram, and TikTok in the highest quality.</p>
+        </section>
+
+        <!-- Platform Cards -->
+        <section class="platforms-grid">
+            <a href="/youtube" class="platform-card youtube-card">
+                <div class="platform-icon"><i class="fab fa-youtube"></i></div>
+                <h3>YouTube</h3>
+                <p>Download videos and audio in multiple qualities up to 2K resolution</p>
+                <div class="platform-features">
+                    <span class="feature-tag">360p - 2K</span>
+                    <span class="feature-tag">MP3 Audio</span>
+                    <span class="feature-tag">Shorts</span>
+                </div>
+            </a>
+            <a href="/facebook" class="platform-card facebook-card">
+                <div class="platform-icon"><i class="fab fa-facebook-f"></i></div>
+                <h3>Facebook</h3>
+                <p>Save Facebook videos, reels, and stories in HD and SD quality</p>
+                <div class="platform-features">
+                    <span class="feature-tag">HD Quality</span>
+                    <span class="feature-tag">SD Quality</span>
+                    <span class="feature-tag">Reels</span>
+                </div>
+            </a>
+            <a href="/instagram" class="platform-card instagram-card">
+                <div class="platform-icon"><i class="fab fa-instagram"></i></div>
+                <h3>Instagram</h3>
+                <p>Download reels, posts, stories, and IGTV videos easily</p>
+                <div class="platform-features">
+                    <span class="feature-tag">Reels</span>
+                    <span class="feature-tag">Stories</span>
+                    <span class="feature-tag">Posts</span>
+                </div>
+            </a>
+            <a href="/tiktok" class="platform-card tiktok-card">
+                <div class="platform-icon"><i class="fab fa-tiktok"></i></div>
+                <h3>TikTok</h3>
+                <p>Download TikTok videos without watermark and extract audio</p>
+                <div class="platform-features">
+                    <span class="feature-tag">No Watermark</span>
+                    <span class="feature-tag">Audio Only</span>
+                    <span class="feature-tag">HD</span>
+                </div>
+            </a>
+        </section>
+
+        <!-- Divider -->
+        <div class="section-divider">
+            <div class="line"></div>
+            <div class="divider-icon"><i class="fas fa-bolt"></i></div>
+            <div class="line"></div>
+        </div>
+
+        <!-- Features Section -->
+        <section class="features-section">
+            <h2 class="features-title">Why Choose SaveGrab?</h2>
+            <p class="features-subtitle">Built with love by Dark Forid for everyone</p>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-card-icon"><i class="fas fa-shield-alt"></i></div>
+                    <h4>100% Secure</h4>
+                    <p>No data stored. Your privacy is our priority.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-card-icon"><i class="fas fa-infinity"></i></div>
+                    <h4>Unlimited</h4>
+                    <p>Download as many videos as you want. No limits.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-card-icon"><i class="fas fa-bolt"></i></div>
+                    <h4>Super Fast</h4>
+                    <p>Lightning-fast processing and download speeds.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-card-icon"><i class="fas fa-mobile-alt"></i></div>
+                    <h4>Mobile Friendly</h4>
+                    <p>Works perfectly on all devices and browsers.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-card-icon"><i class="fas fa-gem"></i></div>
+                    <h4>HD Quality</h4>
+                    <p>Get the highest quality available up to 2K.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-card-icon"><i class="fas fa-dollar-sign"></i></div>
+                    <h4>Totally Free</h4>
+                    <p>No registration, no fees. Completely free forever.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Divider -->
+        <div class="section-divider">
+            <div class="line"></div>
+            <div class="divider-icon"><i class="fas fa-code"></i></div>
+            <div class="line"></div>
+        </div>
+
+        <!-- Creator Section -->
+        <section class="creator-section">
+            <div class="creator-card">
+                <div class="creator-avatar">
+                    <i class="fas fa-code"></i>
+                </div>
+                <div class="creator-label">
+                    <i class="fas fa-star"></i> Creator & Developer
+                </div>
+                <h3 class="creator-name">Dark Forid</h3>
+                <p class="creator-role">Full Stack Developer & Creator of SaveGrab</p>
+
+                <div class="stats-bar">
+                    <div class="stat-item">
+                        <span class="stat-number">4</span>
+                        <span class="stat-label">Platforms</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-number">∞</span>
+                        <span class="stat-label">Downloads</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-number">100%</span>
+                        <span class="stat-label">Free</span>
+                    </div>
+                </div>
+
+                <p class="creator-bio">
+                    Passionate developer who built SaveGrab to make social media downloading simple, 
+                    fast, and accessible for everyone. No ads, no limits, just pure functionality.
+                </p>
+
+                <div class="creator-socials">
+                    <a href="https://github.com/darkforid" target="_blank" rel="noopener" class="creator-social-link github">
+                        <i class="fab fa-github"></i> GitHub
+                    </a>
+                    <a href="https://facebook.com/darkforid" target="_blank" rel="noopener" class="creator-social-link facebook-link">
+                        <i class="fab fa-facebook"></i> Facebook
+                    </a>
+                    <a href="https://t.me/darkforid" target="_blank" rel="noopener" class="creator-social-link telegram">
+                        <i class="fab fa-telegram"></i> Telegram
+                    </a>
+                    <a href="https://instagram.com/darkforid" target="_blank" rel="noopener" class="creator-social-link instagram-link">
+                        <i class="fab fa-instagram"></i> Instagram
+                    </a>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer with Credit -->
+    <footer class="footer">
+        <div class="footer-inner">
+            <div class="footer-credit">
+                <span>Crafted with</span>
+                <span class="heart"><i class="fas fa-heart"></i></span>
+                <span>by</span>
+                <a href="https://github.com/darkforid" target="_blank" rel="noopener">Dark Forid</a>
+            </div>
+            <p>&copy; 2024 SaveGrab by Dark Forid. All rights reserved. For personal use only.</p>
+            <div class="footer-links">
+                <a href="/youtube">YouTube</a>
+                <a href="/facebook">Facebook</a>
+                <a href="/instagram">Instagram</a>
+                <a href="/tiktok">TikTok</a>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        function toggleNav() {
+            document.getElementById('navLinks').classList.toggle('active');
+        }
+
+        window.addEventListener('scroll', () => {
+            document.querySelector('.navbar').classList.toggle('scrolled', window.scrollY > 10);
+        });
+
+        // Close mobile nav when clicking a link
+        document.querySelectorAll('.nav-links a').forEach(link => {
+            link.addEventListener('click', () => {
+                document.getElementById('navLinks').classList.remove('active');
+            });
+        });
+
+        // Animate elements on scroll
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('fade-in');
+                }
+            });
+        }, { threshold: 0.1 });
+
+        document.querySelectorAll('.platform-card, .feature-card, .creator-card').forEach(el => {
+            observer.observe(el);
+        });
+    </script>
+</body>
+</html>

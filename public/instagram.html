@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Instagram Downloader - SaveGrab</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body class="instagram-page">
+    <div class="bg-animation">
+        <div class="orb" style="background: #e1306c"></div>
+        <div class="orb" style="background: #f09433"></div>
+        <div class="orb" style="background: #bc1888"></div>
+    </div>
+
+    <nav class="navbar">
+        <a href="/" class="nav-brand">
+            <div class="logo-icon"><i class="fas fa-download"></i></div>
+            SaveGrab
+        </a>
+        <button class="nav-toggle" onclick="toggleNav()">
+            <span></span><span></span><span></span>
+        </button>
+        <ul class="nav-links" id="navLinks">
+            <li><a href="/"><i class="fas fa-home"></i> Home</a></li>
+            <li><a href="/youtube"><i class="fab fa-youtube"></i> YouTube</a></li>
+            <li><a href="/facebook"><i class="fab fa-facebook"></i> Facebook</a></li>
+            <li><a href="/instagram" class="ig-active"><i class="fab fa-instagram"></i> Instagram</a></li>
+            <li><a href="/tiktok"><i class="fab fa-tiktok"></i> TikTok</a></li>
+        </ul>
+    </nav>
+
+    <main class="main-content">
+        <div class="downloader-page">
+            <div class="page-header instagram">
+                <div class="page-icon"><i class="fab fa-instagram"></i></div>
+                <h1>Instagram Downloader</h1>
+                <p>Download Instagram Reels, Posts, Stories & IGTV videos</p>
+            </div>
+
+            <div class="input-section">
+                <div class="input-wrapper">
+                    <input type="text" class="url-input" id="urlInput" 
+                           placeholder="Paste Instagram URL here..." autocomplete="off">
+                    <button class="fetch-btn instagram-btn" id="fetchBtn" onclick="fetchVideo()">
+                        <i class="fas fa-search"></i> Fetch
+                    </button>
+                </div>
+            </div>
+
+            <div class="error-message hidden" id="errorMsg">
+                <i class="fas fa-exclamation-circle"></i>
+                <span id="errorText"></span>
+            </div>
+
+            <div class="loader-section" id="loader">
+                <div class="spinner"></div>
+                <p class="loader-text">Fetching Instagram content...</p>
+            </div>
+
+            <div class="results-section" id="results">
+                <div class="video-preview" id="videoPreview">
+                    <div class="preview-thumbnail">
+                        <img id="thumbnail" src="" alt="Thumbnail">
+                    </div>
+                    <div class="preview-info">
+                        <h3 class="preview-title" id="videoTitle"></h3>
+                        <div class="preview-meta">
+                            <span id="videoAuthor"><i class="fas fa-user"></i></span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="download-section">
+                    <div class="download-content" style="padding:20px;">
+                        <div class="quality-list" id="downloadLinks"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer class="footer">
+        <p>&copy; 2024 SaveGrab. All rights reserved.</p>
+    </footer>
+
+                 <input type="text" class="url-input" id="urlInput" 
+                           placeholder="Paste Facebook video URL here..." autocomplete="off">
+                    <button class="fetch-btn facebook-btn" id="fetchBtn" onclick="fetchVideo()">
+                        <i class="fas fa-search"></i> Fetch
+                    </button>
+                </div>
+            </div>
+
+            <div class="error-message hidden" id="errorMsg">
+                <i class="fas fa-exclamation-circle"></i>
+                <span id="errorText"></span>
+            </div>
+
+            <div class="loader-section" id="loader">
+                <div class="spinner"></div>
+                <p class="loader-text">Fetching video details...</p>
+            </div>
+
+            <div class="results-section" id="results">
+                <div class="video-preview" id="videoPreview">
+                    <=
+    <!-- Remove all inline JS and just add this -->
+<script src="/js/app.js"></script>
+</body>
+</html>
